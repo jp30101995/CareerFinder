@@ -16,7 +16,7 @@ const routes: Routes = [
             { path: 'grid', loadChildren: () => import('./grid/grid.module').then(m => m.GridModule) },
             { path: 'components', loadChildren: () => import('./bs-component/bs-component.module').then(m => m.BsComponentModule) },
             { path: 'blank-page', loadChildren: () => import('./blank-page/blank-page.module').then(m => m.BlankPageModule) },
-            { path: 'vslider', loadChildren: () => import('./vslider/vslider.module').then(m => m.VsliderModule) }
+            { path: 'learner', loadChildren: () => import('./learner/learner.module').then(m => m.LearnerModule) }
         ]
     }
 ];
