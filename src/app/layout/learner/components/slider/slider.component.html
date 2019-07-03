@@ -1,3 +1,15 @@
-<div style="height: 200px;">
-  <ng5-slider [(value)]="value" [options]="options"></ng5-slider>
+<div class="card mb-3">
+    <div class="card-header">
+        Subjects
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2" style="height: 190px;" *ngFor="let s of subjects">
+                <ng5-slider [(value)]="s.marks" [(ngModel)]="s.marks" [options]="options"></ng5-slider>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-info btn-sm" style="float: right" (click)="checkPrediction()">Submit</button>
+    </div>
 </div>

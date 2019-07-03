@@ -8,11 +8,22 @@ import { LearnerResponse } from './learner-response';
     styleUrls: ['./learner.component.scss']
 })
 export class LearnerComponent implements OnInit {
+    subjects: LearnerResponse[] = [];
     constructor(private learnerService: LearnerService) {}
 
     ngOnInit() {
+        this.getSubjects();
+    }
+
+    getSubjects() {
+        const that = this;
+        that.subjects = [];
         this.learnerService.getData().subscribe(
             (data: LearnerResponse) => {
+                // tslint:disable-next-line:forin
+                for (const v in data) {
+                    that.subjects.push(data[v]);
+                }
                 console.log(data);
             },
             error => {

@@ -10,14 +10,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        LanguageTranslationModule,
-        AppRoutingModule
-    ],
+    imports: [CommonModule, BrowserModule, BrowserAnimationsModule, HttpClientModule, LanguageTranslationModule, AppRoutingModule],
     declarations: [AppComponent],
     providers: [AuthGuard],
     bootstrap: [AppComponent]

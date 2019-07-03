@@ -1,4 +1,4 @@
 export class LearnerResponse {
-    url: string;
-    text: string;
+    subject_name: string;
+    marks: string;
 }

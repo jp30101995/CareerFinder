@@ -9,8 +9,18 @@ import { PageHeaderModule } from '../../shared';
 import { RecommendationSubjectComponent } from './components/recommendation-subject/recommendation-subject.component';
 import { ChartsModule as Ng2Charts } from 'ng2-charts';
 import { LearnerGridComponent } from './components/learner-grid/learner-grid.component';
+import { AgGridModule } from 'ag-grid-angular';
 @NgModule({
     declarations: [SliderComponent, LearnerComponent, RecommendationSubjectComponent, LearnerGridComponent],
-    imports: [Ng2Charts, PageHeaderModule, CommonModule, LearnerRoutingModule, FormsModule, ReactiveFormsModule, Ng5SliderModule]
+    imports: [
+        Ng2Charts,
+        PageHeaderModule,
+        CommonModule,
+        LearnerRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        Ng5SliderModule,
+        AgGridModule.withComponents([])
+    ]
 })
 export class LearnerModule {}

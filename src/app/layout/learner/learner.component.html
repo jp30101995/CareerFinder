@@ -1,59 +1,8 @@
 <app-page-header [heading]="'Learner Details'" [icon]="'fa-bar-chart-o'"></app-page-header>
 <div class="row">
-    <div class="col col-sm-6">
-        <div class="card mb-3">
-            <div class="card-header">
-                Subjects
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-2">
-                        <app-slider></app-slider>
-                        <div>
-                          English
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <app-slider></app-slider>
-                        <div>
-                            Science
-                          </div>
-                    </div>
-                    <div class="col-md-2">
-                        <app-slider></app-slider>
-                        <div>
-                            Maths
-                          </div>
-                    </div>
-                    <div class="col-md-2">
-                        <app-slider></app-slider>
-                        <div>
-                            Maths
-                          </div>
-                    </div>
-                    <div class="col-md-2">
-                        <app-slider></app-slider>
-                        <div>
-                            Maths
-                          </div>
-                    </div>
-                    
-                </div>
-            </div>
-            <div class="card-footer">
-                <button class="btn btn-info btn-sm" style="float: right">Submit</button>
-            </div>
-        </div>
-    </div>
-    <div class="col col-sm-6">
-        <div class="card mb-3">
-            <div class="card-header">
-                Recommedant Subjects
-            </div>
-            <div class="card-body">  <div class="row">
-                <app-recommendation-subject></app-recommendation-subject>
-            </div></div>
-          
-        </div>
-    </div>
+    <div class="col-md-6"><app-slider [subjects]="subjects"> </app-slider></div>
+    <div class="col-md-6"><app-recommendation-subject></app-recommendation-subject></div>
+</div>
+<div class="row">
+    <div class="col-md-12"><app-learner-grid></app-learner-grid></div>
 </div>

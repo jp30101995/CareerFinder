@@ -12,4 +12,9 @@ export class LearnerService {
     getData(): Observable<LearnerResponse> {
         return this.http.get<LearnerResponse>(Apiurl.apiurl);
     }
+    getPrediction(learner: LearnerResponse[]): Observable<LearnerResponse> {
+        debugger;
+        // return this.http.post<LearnerResponse>(Apiurl.apiurl);
+        return  null;
+    }
 }
