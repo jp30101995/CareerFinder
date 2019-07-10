@@ -9,18 +9,21 @@ import { PageHeaderModule } from '../../shared';
 import { RecommendationSubjectComponent } from './components/recommendation-subject/recommendation-subject.component';
 import { ChartsModule as Ng2Charts } from 'ng2-charts';
 import { LearnerGridComponent } from './components/learner-grid/learner-grid.component';
-import { AgGridModule } from 'ag-grid-angular';
+// import { AgGridModule } from 'ag-grid-angular';
+import { GridModule } from '../../shared/modules/grid/grid.module';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 @NgModule({
     declarations: [SliderComponent, LearnerComponent, RecommendationSubjectComponent, LearnerGridComponent],
     imports: [
+        GridModule,
         Ng2Charts,
         PageHeaderModule,
         CommonModule,
         LearnerRoutingModule,
         FormsModule,
         ReactiveFormsModule,
-        Ng5SliderModule,
-        AgGridModule.withComponents([])
+        Ng5SliderModule
     ]
+    // schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class LearnerModule {}
