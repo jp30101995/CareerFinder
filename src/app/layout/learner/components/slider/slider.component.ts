@@ -12,6 +12,7 @@ export class SliderComponent implements OnInit {
     // @Input() subjects: LearnerResponse[] = [];
     subjects: LearnerResponse[] = [];
     @Output() isDisplay = new EventEmitter<boolean>();
+    @Output() objData = new EventEmitter<boolean>();
     options: Options = {
         floor: 0,
         ceil: 100,
@@ -25,13 +26,20 @@ export class SliderComponent implements OnInit {
 
     checkPrediction() {
         this.isDisplay.emit(true);
+        this.sendObjData();
+    }
+
+    sendObjData() {
+        debugger;
+        localStorage.setItem('subjects', JSON.stringify(this.subjects));
+
+        // this.objData.emit(this.subjects);
     }
     getSubjects() {
         const that = this;
         that.subjects = [];
         this.learnerService.getSubjects().subscribe(
             (data: LearnerResponse) => {
-                debugger;
                 // tslint:disable-next-line:forin
                 for (const v in data) {
                     this.subjects.push(data[v]);

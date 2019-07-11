@@ -1,29 +1,56 @@
 import { Component, OnInit } from '@angular/core';
+import { LearnerService } from '../../learner.service';
+import { LearnerResponse } from '../../learner-response';
 
 @Component({
-  selector: 'app-recommendation-subject-future',
-  templateUrl: './recommendation-subject-future.component.html',
-  styleUrls: ['./recommendation-subject-future.component.scss']
+    selector: 'app-recommendation-subject-future',
+    templateUrl: './recommendation-subject-future.component.html',
+    styleUrls: ['./recommendation-subject-future.component.scss']
 })
 export class RecommendationSubjectFutureComponent implements OnInit {
+    public doughnutChartLabels: string[] = [];
+    public doughnutChartData: number[] = [];
+    public doughnutChartType: string;
+    futureSubjects: LearnerResponse[] = [];
+    isSuccess = false;
+    // events
+    public chartClicked(e: any): void {
+        // console.log(e);
+    }
 
-  public doughnutChartLabels: string[] = ['Environment', 'Computer', 'English'];
-  public doughnutChartData: number[] = [350, 450, 100];
-  public doughnutChartType: string;
+    public chartHovered(e: any): void {
+        // console.log(e);
+    }
+    constructor(private learnerService: LearnerService) {}
 
-   // events
-   public chartClicked(e: any): void {
-    // console.log(e);
-}
-
-public chartHovered(e: any): void {
-    // console.log(e);
-}
-
-  constructor() {}
-
-  ngOnInit() {
-      this.doughnutChartType = 'doughnut';
-  }
-
+    ngOnInit() {
+        this.doughnutChartType = 'doughnut';
+        this.getPrediction();
+    }
+    getPrediction() {
+        debugger;
+        const that = this;
+        that.futureSubjects = [];
+        const item = JSON.parse(localStorage.getItem('subjects'));
+        // tslint:disable-next-line:forin
+        for (const i in item) {
+            item[i].subject = String(item[i].subject).substr(String(item[i].subject).lastIndexOf('-') + 1);
+        }
+        debugger;
+        this.learnerService.getPrediction(item).subscribe(
+            (data: LearnerResponse) => {
+                debugger;
+                // tslint:disable-next-line:forin
+                for (const v in data) {
+                    this.doughnutChartLabels.push(data[v].subject);
+                    this.doughnutChartData.push(data[v].marks);
+                }
+                this.isSuccess = true;
+                console.log(data);
+            },
+            error => {
+                console.log(error);
+            }
+        );
+    }
 }

@@ -1,17 +1,17 @@
 <div class="card mb-3">
-  <div class="card-header">
-     Future: Recommended Subjects
-  </div>
-  <div class="card-body">
-      <canvas
-          baseChart
-          height="110px"
-          [data]="doughnutChartData"
-          [labels]="doughnutChartLabels"
-          [chartType]="doughnutChartType"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"
-      >
-      </canvas>
-  </div>
+    <div class="card-header">
+        Future: Recommended Subjects
+    </div>
+    <div class="card-body" *ngIf="isSuccess">
+        <canvas
+            baseChart
+            height="110px"
+            [data]="doughnutChartData"
+            [labels]="doughnutChartLabels"
+            [chartType]="doughnutChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"
+        >
+        </canvas>
+    </div>
 </div>

@@ -9,7 +9,7 @@ import { LearnerResponse } from './learner-response';
 })
 export class LearnerComponent implements OnInit {
     subjects: LearnerResponse[] = [];
-    similarLearners: LearnerResponse[] = [];
+    similarSubjects: LearnerResponse[] = [];
     constructor(private learnerService: LearnerService) {}
     display = false;
     ngOnInit() {
@@ -20,20 +20,5 @@ export class LearnerComponent implements OnInit {
         this.display = $evnt;
     }
 
-    getSubjects() {
-        const that = this;
-        that.similarLearners = [];
-        this.learnerService.getLearners().subscribe(
-            (data: LearnerResponse) => {
-                // tslint:disable-next-line:forin
-                for (const v in data) {
-                    that.similarLearners.push(data[v]);
-                }
-                console.log(data);
-            },
-            error => {
-                console.log(error);
-            }
-        );
-    }
+   
 }
