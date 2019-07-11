@@ -123,8 +123,8 @@ def getSubjects(learner_id):
     #similar_learners_df 
     subjects = learners.MasterSubjectName.unique()
 
-    learners = learners[['LearnerID', 'Points.1', 'SchoolSubjectName']]
-
+    #learners = learners[['LearnerID', 'Points.1', 'SchoolSubjectName']]
+    learners = learners[['LearnerID', 'Points.1', 'SchoolSubjectName']].rename(columns={"Points.1": "Marks"})
     arr = []
     grid_obj = {
         "grid":str(learners.to_json(orient='records'))
