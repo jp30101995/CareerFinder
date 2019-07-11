@@ -132,8 +132,12 @@ def getSubjects(learner_id):
     # arr = []
     # grid_obj = {
     #     "grid":learners.pivot_table(index = ['LearnerID'], values = 'Points.1', columns = 'MasterSubjectName').fillna(0).reset_index().to_json(orient='records')
-    # }
-    arr.append(grid_obj)
+    obj = {
+            "LearnerID": learner_id
+           
+        }
+
+    arr.append(obj)
     #return similar_learners_df.to_json(orient='records')
     # for s in subjects:
     #     id = str(learner_id) + '-' + str(learner_schoolid)
