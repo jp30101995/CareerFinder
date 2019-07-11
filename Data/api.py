@@ -17,10 +17,10 @@ import matplotlib.pyplot as plt
 from sklearn.neighbors import NearestNeighbors
 import os
 import json
-
+from flask_cors import CORS
 
 app = FlaskAPI(__name__)
-
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 notes = {
     0: 'do the shopping',
