@@ -1,13 +1,16 @@
 <app-page-header [heading]="'Learner Details'" [icon]="'fa-bar-chart-o'"></app-page-header>
 <div class="row">
-    <div class="col-md-6"><app-slider [subjects]="subjects"> </app-slider></div>
+    <div class="col-md-6"><app-slider [subjects]="subjects" (isDisplay)="enabledDisabledControl($event)"> </app-slider></div>
     <div class="col-md-6"><app-recommendation-subject></app-recommendation-subject></div>
 </div>
 <div class="row">
     <div class="col-md-6">
         <app-learner-history></app-learner-history>
     </div>
+    <div class="col-md-6" *ngIf="display" >
+        <app-recommendation-subject-future></app-recommendation-subject-future>
+    </div>
 </div>
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-12"><app-learner-grid></app-learner-grid></div>
-</div>
+</div> -->

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { LearnerService } from './learner.service';
 import { LearnerResponse } from './learner-response';
 
@@ -10,9 +10,13 @@ import { LearnerResponse } from './learner-response';
 export class LearnerComponent implements OnInit {
     subjects: LearnerResponse[] = [];
     constructor(private learnerService: LearnerService) {}
-
+    display = false;
     ngOnInit() {
         this.getSubjects();
+    }
+
+    enabledDisabledControl($evnt: boolean) {
+        this.display = $evnt;
     }
 
     getSubjects() {

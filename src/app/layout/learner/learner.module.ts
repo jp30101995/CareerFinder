@@ -15,6 +15,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { LearnerHistoryComponent } from './components/learner-history/learner-history.component';
 import { ViewLearnerHistoryComponent } from './components/view-learner-history/view-learner-history.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RecommendationSubjectFutureComponent } from './components/recommendation-subject-future/recommendation-subject-future.component';
 @NgModule({
     declarations: [
         SliderComponent,
@@ -22,7 +23,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         RecommendationSubjectComponent,
         LearnerGridComponent,
         LearnerHistoryComponent,
-        ViewLearnerHistoryComponent
+        ViewLearnerHistoryComponent,
+        RecommendationSubjectFutureComponent
     ],
     imports: [
         GridModule,

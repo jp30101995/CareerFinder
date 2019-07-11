@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Options } from 'ng5-slider';
 import { LearnerResponse } from '../../learner-response';
 import { FormControl } from '@angular/forms';
@@ -10,7 +10,7 @@ import { LearnerService } from '../../learner.service';
 })
 export class SliderComponent implements OnInit {
     @Input() subjects: LearnerResponse[] = [];
-
+    @Output() isDisplay = new EventEmitter<boolean>();
     options: Options = {
         floor: 0,
         ceil: 100,
@@ -21,14 +21,16 @@ export class SliderComponent implements OnInit {
     ngOnInit() {}
 
     checkPrediction() {
-        const objData = this.subjects;
-        this.learnerService.getPrediction(objData).subscribe(
-            (data: LearnerResponse) => {
-                console.log(data);
-            },
-            error => {
-                console.log(error);
-            }
-        );
+        debugger;
+        this.isDisplay.emit(true);
+        // const objData = this.subjects;
+        // this.learnerService.getPrediction(objData).subscribe(
+        //     (data: LearnerResponse) => {
+        //         console.log(data);
+        //     },
+        //     error => {
+        //         console.log(error);
+        //     }
+        // );
     }
 }
