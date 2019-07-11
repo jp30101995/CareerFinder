@@ -126,18 +126,26 @@ def getSubjects(learner_id):
     #learners = learners[['LearnerID', 'Points.1', 'SchoolSubjectName']]
     learners = learners[['LearnerID', 'Points.1', 'SchoolSubjectName']].rename(columns={"Points.1": "Marks"})
     arr = []
-    grid_obj = {
-        "grid":str(learners.to_json(orient='records'))
-    }
+    arr.append(learners.to_json(orient='records'))
+    # grid_obj = {
+    #     "grid":str(learners.to_json(orient='records'))
+    # }
     # arr = []
     # grid_obj = {
     #     "grid":learners.pivot_table(index = ['LearnerID'], values = 'Points.1', columns = 'MasterSubjectName').fillna(0).reset_index().to_json(orient='records')
-    obj = {
-            "LearnerID": learner_id
+    # for s in learners:
+    #     obj ={
+    #         "learnerID": learner_id,
+    #         "subject": s,
+    #         "marks":s
+    #     }
+    #     arr.append(grid_obj)
+    # obj = {
+    #         "LearnerID": learner_id
            
-        }
+    #     }
 
-    arr.append(obj)
+    #arr.append(obj)
     #return similar_learners_df.to_json(orient='records')
     # for s in subjects:
     #     id = str(learner_id) + '-' + str(learner_schoolid)
@@ -148,7 +156,8 @@ def getSubjects(learner_id):
     #         "marks": algo.predict(id, subject)
     #     }
     #     arr.append(obj)
-    return json.dumps(arr)
+    # return json.dumps(arr)
+    return learners.to_json(orient='records')
     # return json.dumps(learners)
     # return "".join(map(str, subjects))
 
