@@ -122,6 +122,81 @@ def getSubjects(learner_id):
     learners = data[(data['year'] == (current_yr + 1)) & (data['LearnerID'].isin(similar_learners_without_self['LearnerID'].values))]
     #similar_learners_df 
     subjects = learners.MasterSubjectName.unique()
+    learners = learners[['LearnerID', 'Points.1', 'SchoolSubjectName']].rename(columns={"Points.1": "Marks"})
+
+    arr = []
+    # arr.append(learners.to_json(orient='records'))
+    
+    # grid_obj = {
+    #     "grid":str(learners.to_json(orient='records'))
+    # }
+    # arr.append(grid_obj)
+    #return similar_learners_df.to_json(orient='records')
+    for s in subjects:
+        id = str(learner_id) + '-' + str(learner_schoolid)
+        subject = learner_curr_year + '-' + s
+        obj = {
+            "learnerID": learner_id,
+            "subject": subject,
+            "marks": algo.predict(id, subject)[3]
+        }
+        arr.append(obj)
+        
+    return json.dumps(arr)  
+
+
+@app.route("/getLearners/<int:learner_id>/", methods=['GET', 'PUT', 'DELETE'])
+def getLearners(learner_id):
+    data = pd.read_csv('hack.csv')
+    learner_data = data[data["LearnerID"] == learner_id].head(1)
+    learner_schoolid = learner_data['Schoolid'].values[0]
+    learner_curr_year = learner_data['CurretYearName'].values[0]
+
+    data['year'] = data['MasterYearName'].str.slice(5)
+    data['year'] = pd.to_numeric(data['year'], errors='coerce').fillna(0).astype(np.int64)
+
+    data['current_year'] = data['CurretYearName'].str.slice(5)
+    data['current_year'] = pd.to_numeric(data['current_year'], errors='coerce').fillna(0).astype(np.int64)
+
+    current_yr = data[data["LearnerID"] == learner_id].sort_values(['year'], ascending=[0]).iloc[[0],:]["year"].values[0]
+    past_data = data[(data['year'] <= current_yr) & (data['year'] != 0) & (data['current_year'] > current_yr) & (data['LearnerID'] != learner_id)]
+
+    df = past_data.pivot_table(index = ['LearnerID'], values = 'Points.1', columns = 'MasterSubjectName').fillna(0).reset_index()
+
+    learner_pivot = learner_data.pivot_table(index = ['LearnerID'], values = 'Points.1', columns = 'MasterSubjectName').fillna(0).reset_index()
+
+    final_pivot = pd.concat([learner_pivot, df], ignore_index=False, sort=True).fillna(0)
+    final_pivot[final_pivot["LearnerID"] == learner_id]
+
+
+    model_knn = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=5, n_jobs=-1)
+    model_knn.fit(df)
+
+    values, indexes = model_knn.kneighbors(final_pivot[final_pivot["LearnerID"] == learner_id].values.reshape(1,-1))
+    similar_leaners = dict(zip(indexes[0], values[0]))
+
+
+    final_learner_pivot = final_pivot[final_pivot["LearnerID"] == learner_id]
+
+
+    sorted_leaners = [(k, similar_leaners[k]) for k in sorted(similar_leaners, key=similar_leaners.get, reverse=True)]
+
+    index_arr = []
+    values_arr = []
+    for l in sorted_leaners:
+        index_arr.append(l[0])
+        values_arr.append(l[1])
+
+
+    similar_learners_df = df.loc[index_arr, :]
+
+    similar_learners_df['similarity'] = values_arr
+    final_learner_pivot['similarity'] = 1
+    similar_learners_without_self = similar_learners_df
+    similar_learners_df = pd.concat([similar_learners_df,final_learner_pivot], ignore_index=False, sort=False).fillna(0) 
+    learners = data[(data['year'] == (current_yr + 1)) & (data['LearnerID'].isin(similar_learners_without_self['LearnerID'].values))]
+    #similar_learners_df 
+    subjects = learners.MasterSubjectName.unique()
 
     #learners = learners[['LearnerID', 'Points.1', 'SchoolSubjectName']]
     learners = learners[['LearnerID', 'Points.1', 'SchoolSubjectName']].rename(columns={"Points.1": "Marks"})
@@ -167,8 +242,8 @@ def getLearnersNew(learner_id):
     return getSubjects(learner_id)
 
 #getSubjects(233381)
-@app.route("/getLearners/<int:learner_id>/", methods=['GET', 'PUT', 'DELETE'])
-def getLearners(learner_id):
+@app.route("/getLearners1/<int:learner_id>/", methods=['GET', 'PUT', 'DELETE'])
+def getLearners1(learner_id):
     #learner_id = 232301
     data_df = pd.read_csv('hack.csv')
     df = data_df.pivot_table(index = ['LearnerID'], values = 'Points.1', columns = 'MasterSubjectName').fillna(0).reset_index()
