@@ -17,8 +17,8 @@ import matplotlib.pyplot as plt
 from sklearn.neighbors import NearestNeighbors
 import os
 import json
+from flask import Flask
 from flask_cors import CORS
-
 app = FlaskAPI(__name__)
 CORS(app)
 
