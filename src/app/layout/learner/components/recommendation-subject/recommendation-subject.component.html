@@ -2,10 +2,10 @@
     <div class="card-header">
       Current: Recommended Subjects
     </div>
-    <div class="card-body"  *ngIf="isSuccess">
+    <div class="card-body" *ngIf="isSuccess">
         <canvas
             baseChart
-            height="110px"
+            height="180px"
             [data]="doughnutChartData"
             [labels]="doughnutChartLabels"
             [chartType]="doughnutChartType"
