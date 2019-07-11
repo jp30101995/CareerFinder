@@ -123,10 +123,16 @@ def getSubjects(learner_id):
     #similar_learners_df 
     subjects = learners.MasterSubjectName.unique()
 
+    learners = learners[['LearnerID', 'Points.1', 'SchoolSubjectName']]
+
     arr = []
     grid_obj = {
-        "grid":learners.pivot_table(index = ['LearnerID'], values = 'Points.1', columns = 'MasterSubjectName').fillna(0).reset_index().to_json(orient='records')
+        "grid":str(learners.to_json(orient='records'))
     }
+    # arr = []
+    # grid_obj = {
+    #     "grid":learners.pivot_table(index = ['LearnerID'], values = 'Points.1', columns = 'MasterSubjectName').fillna(0).reset_index().to_json(orient='records')
+    # }
     arr.append(grid_obj)
     #return similar_learners_df.to_json(orient='records')
     for s in subjects:
