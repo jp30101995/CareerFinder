@@ -16,6 +16,7 @@ import { LearnerHistoryComponent } from './components/learner-history/learner-hi
 import { ViewLearnerHistoryComponent } from './components/view-learner-history/view-learner-history.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RecommendationSubjectFutureComponent } from './components/recommendation-subject-future/recommendation-subject-future.component';
+import { PastResultComponent } from './components/past-result/past-result.component';
 @NgModule({
     declarations: [
         SliderComponent,
@@ -24,7 +25,8 @@ import { RecommendationSubjectFutureComponent } from './components/recommendatio
         LearnerGridComponent,
         LearnerHistoryComponent,
         ViewLearnerHistoryComponent,
-        RecommendationSubjectFutureComponent
+        RecommendationSubjectFutureComponent,
+        PastResultComponent
     ],
     imports: [
         GridModule,

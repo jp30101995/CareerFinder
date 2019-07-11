@@ -1,5 +1,16 @@
 <app-page-header [heading]="'Learner Details'" [icon]="'fa-bar-chart-o'"></app-page-header>
 <div class="row">
+    <div  class=" col-md-8 form-group">
+        <label>Select Year</label>
+        <select class="form-control">
+            <option>Year 1</option>
+            <option>Year 2</option>
+            <option>Year 3</option>
+        </select>
+    </div>
+</div>
+<hr>
+<div class="row">
     <div class="col-md-6"><app-slider [subjects]="subjects" (isDisplay)="enabledDisabledControl($event)"> </app-slider></div>
     <div class="col-md-6"><app-recommendation-subject></app-recommendation-subject></div>
 </div>
@@ -7,7 +18,7 @@
     <div class="col-md-6">
         <app-learner-history></app-learner-history>
     </div>
-    <div class="col-md-6" *ngIf="display" >
+    <div class="col-md-6" *ngIf="display">
         <app-recommendation-subject-future></app-recommendation-subject-future>
     </div>
 </div>

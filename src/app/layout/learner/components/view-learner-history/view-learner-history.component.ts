@@ -6,21 +6,23 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './view-learner-history.component.html',
     styleUrls: ['./view-learner-history.component.scss']
 })
-
 export class ViewLearnerHistoryComponent {
     closeResult: string;
     constructor(private modalService: NgbModal) {}
+   
     open(content) {
-        this.modalService.open(content, {
-            size: 'lg'
-          }).result.then(
-            result => {
-                this.closeResult = `Closed with: ${result}`;
-            },
-            reason => {
-                this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-            }
-        );
+        this.modalService
+            .open(content, {
+                size: 'lg'
+            })
+            .result.then(
+                result => {
+                    this.closeResult = `Closed with: ${result}`;
+                },
+                reason => {
+                    this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+                }
+            );
     }
 
     private getDismissReason(reason: any): string {
