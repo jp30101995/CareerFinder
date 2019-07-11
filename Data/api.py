@@ -173,7 +173,9 @@ def getSubjects(learner_id):
     past_data = data[(data['year'] <= current_yr) & (data['year'] != 0) & (data['current_year'] > current_yr) & (data['LearnerID'] != learner_id)]
 
     df = past_data.pivot_table(index = ['LearnerID'], values = 'Points.1', columns = 'MasterSubjectName').fillna(0).reset_index()
-
+    # recently added
+    learner_data = data[data["LearnerID"] == learner_id]
+    # recently added done
     learner_pivot = learner_data.pivot_table(index = ['LearnerID'], values = 'Points.1', columns = 'MasterSubjectName').fillna(0).reset_index()
 
     final_pivot = pd.concat([learner_pivot, df], ignore_index=False, sort=True).fillna(0)
