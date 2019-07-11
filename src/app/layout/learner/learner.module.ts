@@ -12,8 +12,9 @@ import { LearnerGridComponent } from './components/learner-grid/learner-grid.com
 // import { AgGridModule } from 'ag-grid-angular';
 import { GridModule } from '../../shared/modules/grid/grid.module';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { LearnerHistoryComponent } from './components/learner-history/learner-history.component';
 @NgModule({
-    declarations: [SliderComponent, LearnerComponent, RecommendationSubjectComponent, LearnerGridComponent],
+    declarations: [SliderComponent, LearnerComponent, RecommendationSubjectComponent, LearnerGridComponent, LearnerHistoryComponent],
     imports: [
         GridModule,
         Ng2Charts,

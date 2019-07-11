@@ -27,6 +27,7 @@ notes = {
     1: 'build the codez',
     2: 'paint the door',
 }
+algo = SVD()
 
 def note_repr(key):
     return {
@@ -71,10 +72,12 @@ def notes_detail(key):
 
 @app.route("/getSubjects/<int:learner_id>/", methods=['GET', 'PUT', 'DELETE'])
 def getSubjects(learner_id):
-    
     data = pd.read_csv('hack.csv')
-    learner_data = data[data["LearnerID"] == learner_id]
- 
+    learner_data = data[data["LearnerID"] == learner_id].head(1)
+    learner_schoolid = learner_data['Schoolid'].values[0]
+    learner_curr_year = learner_data['CurretYearName'].values[0]
+
+
     data['year'] = data['MasterYearName'].str.slice(5)
     data['year'] = pd.to_numeric(data['year'], errors='coerce').fillna(0).astype(np.int64)
 
@@ -82,7 +85,6 @@ def getSubjects(learner_id):
     data['current_year'] = pd.to_numeric(data['current_year'], errors='coerce').fillna(0).astype(np.int64)
     
     current_yr = data[data["LearnerID"] == learner_id].sort_values(['year'], ascending=[0]).iloc[[0],:]["year"].values[0]
-
     past_data = data[(data['year'] <= current_yr) & (data['year'] != 0) & (data['current_year'] > current_yr) & (data['LearnerID'] != learner_id)]
 
     
@@ -122,11 +124,27 @@ def getSubjects(learner_id):
     learners = data[(data['year'] == (current_yr + 1)) & (data['LearnerID'].isin(similar_learners_without_self['LearnerID'].values))]
     #similar_learners_df 
     subjects = learners.MasterSubjectName.unique()
+
+    arr = []
+    grid_obj = {
+        "grid":learners.pivot_table(index = ['LearnerID'], values = 'Points.1', columns = 'MasterSubjectName').fillna(0).reset_index().to_json()
+    }
+    arr.append(grid_obj)
+
+    print(len(subjects))
     #return similar_learners_df.to_json(orient='records')
-
-    
-    return ','.join(learners['LearnerID'].values)
-
+    for s in subjects:
+        id = str(learner_id) + '-' + str(learner_schoolid)
+        subject = learner_curr_year + '-' + s
+        obj = {
+            "learnerID": learner_id,
+            "subject": subject,
+            "marks": algo.predict(id, subject)
+        }
+        arr.append(obj)
+    return str(learners.shape)
+    # return json.dumps(learners)
+    # return "".join(map(str, subjects))
 
 
 @app.route("/getLearnersNew/<int:learner_id>/", methods=['GET', 'PUT', 'DELETE'])
@@ -170,16 +188,19 @@ def getLearners(learner_id):
 
 def trainModel():
     data_df = pd.read_csv('hack.csv')
-    data_df['ids'] = data_df['LearnerID'].map(str) + '-' + data_df['MasterYearName'] + '-' + data_df['MasterSubjectName'] + '-' + data_df['Schoolid'].map(str)
+    data_df['ids'] = data_df['LearnerID'].map(str) + '-' + data_df['Schoolid'].map(str)
+    data_df['subjects'] = data_df['MasterYearName'] + '-' + data_df['MasterSubjectName']
     data_df["BPoints"] = data_df["Points.1"] / 10
     data_df["BPoints"] = data_df["BPoints"].astype(int)
 
     reader = Reader(rating_scale=(0, 10))
-    data = Dataset.load_from_df(data_df[['ids', 'MasterSubjectName', 'BPoints']], reader)
+    data = Dataset.load_from_df(data_df[['ids', 'subjects', 'BPoints']], reader)
     algo = SVD()
     trainset, testset = train_test_split(data, test_size=.05)
     algo.fit(trainset)
 
+
+trainModel()
 if __name__ == "__main__":
     app.run(debug=True)
-    trainModel()
+    
