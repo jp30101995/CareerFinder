@@ -20,7 +20,7 @@ import json
 from flask_cors import CORS
 
 app = FlaskAPI(__name__)
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app)
 
 notes = {
     0: 'do the shopping',
