@@ -77,37 +77,35 @@ def getSubjects(learner_id):
     learner_schoolid = learner_data['Schoolid'].values[0]
     learner_curr_year = learner_data['CurretYearName'].values[0]
 
-
     data['year'] = data['MasterYearName'].str.slice(5)
     data['year'] = pd.to_numeric(data['year'], errors='coerce').fillna(0).astype(np.int64)
 
     data['current_year'] = data['CurretYearName'].str.slice(5)
     data['current_year'] = pd.to_numeric(data['current_year'], errors='coerce').fillna(0).astype(np.int64)
-    
+
     current_yr = data[data["LearnerID"] == learner_id].sort_values(['year'], ascending=[0]).iloc[[0],:]["year"].values[0]
     past_data = data[(data['year'] <= current_yr) & (data['year'] != 0) & (data['current_year'] > current_yr) & (data['LearnerID'] != learner_id)]
 
-    
     df = past_data.pivot_table(index = ['LearnerID'], values = 'Points.1', columns = 'MasterSubjectName').fillna(0).reset_index()
-    
+
     learner_pivot = learner_data.pivot_table(index = ['LearnerID'], values = 'Points.1', columns = 'MasterSubjectName').fillna(0).reset_index()
-    
+
     final_pivot = pd.concat([learner_pivot, df], ignore_index=False, sort=True).fillna(0)
     final_pivot[final_pivot["LearnerID"] == learner_id]
 
-    
+
     model_knn = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=5, n_jobs=-1)
     model_knn.fit(df)
-    
+
     values, indexes = model_knn.kneighbors(final_pivot[final_pivot["LearnerID"] == learner_id].values.reshape(1,-1))
     similar_leaners = dict(zip(indexes[0], values[0]))
-    
+
 
     final_learner_pivot = final_pivot[final_pivot["LearnerID"] == learner_id]
-    
+
 
     sorted_leaners = [(k, similar_leaners[k]) for k in sorted(similar_leaners, key=similar_leaners.get, reverse=True)]
-    
+
     index_arr = []
     values_arr = []
     for l in sorted_leaners:
@@ -116,7 +114,7 @@ def getSubjects(learner_id):
 
 
     similar_learners_df = df.loc[index_arr, :]
-    
+
     similar_learners_df['similarity'] = values_arr
     final_learner_pivot['similarity'] = 1
     similar_learners_without_self = similar_learners_df
@@ -130,8 +128,6 @@ def getSubjects(learner_id):
         "grid":learners.pivot_table(index = ['LearnerID'], values = 'Points.1', columns = 'MasterSubjectName').fillna(0).reset_index().to_json()
     }
     arr.append(grid_obj)
-
-    print(len(subjects))
     #return similar_learners_df.to_json(orient='records')
     for s in subjects:
         id = str(learner_id) + '-' + str(learner_schoolid)
@@ -142,7 +138,7 @@ def getSubjects(learner_id):
             "marks": algo.predict(id, subject)
         }
         arr.append(obj)
-    return str(learners.shape)
+    return json.dumps(arr)
     # return json.dumps(learners)
     # return "".join(map(str, subjects))
 
@@ -192,14 +188,12 @@ def trainModel():
     data_df['subjects'] = data_df['MasterYearName'] + '-' + data_df['MasterSubjectName']
     data_df["BPoints"] = data_df["Points.1"] / 10
     data_df["BPoints"] = data_df["BPoints"].astype(int)
-
     reader = Reader(rating_scale=(0, 10))
     data = Dataset.load_from_df(data_df[['ids', 'subjects', 'BPoints']], reader)
-    algo = SVD()
     trainset, testset = train_test_split(data, test_size=.05)
     algo.fit(trainset)
 
-
+algo = SVD()
 trainModel()
 if __name__ == "__main__":
     app.run(debug=True)
