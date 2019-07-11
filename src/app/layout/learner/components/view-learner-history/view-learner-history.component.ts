@@ -9,7 +9,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class ViewLearnerHistoryComponent {
     closeResult: string;
     constructor(private modalService: NgbModal) {}
-   
+
     open(content) {
         this.modalService
             .open(content, {

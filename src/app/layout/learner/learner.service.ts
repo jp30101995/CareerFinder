@@ -21,11 +21,10 @@ export class LearnerService {
     getPrediction(learner: LearnerResponse[]): Observable<LearnerResponse> {
         const httpOptions = {
             headers: new HttpHeaders({
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Header': 'Content-Type',
                 'Content-Type': 'application/json'
             })
         };
-        return this.http.post<LearnerResponse>(Apiurl.apiurl + 'getFutureSubjects', learner, httpOptions);
+
+        return this.http.post<LearnerResponse>(Apiurl.apiurl + 'getFutureSubjects/', learner, httpOptions);
     }
 }

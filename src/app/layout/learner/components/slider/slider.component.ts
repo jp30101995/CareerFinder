@@ -13,6 +13,7 @@ export class SliderComponent implements OnInit {
     subjects: LearnerResponse[] = [];
     @Output() isDisplay = new EventEmitter<boolean>();
     @Output() objData = new EventEmitter<boolean>();
+    @Input() yearId: string;
     options: Options = {
         floor: 0,
         ceil: 100,
@@ -21,6 +22,7 @@ export class SliderComponent implements OnInit {
     constructor(private learnerService: LearnerService) {}
     isSuccess = false;
     ngOnInit() {
+        const sd = this.yearId;
         this.getSubjects();
     }
 
@@ -30,10 +32,7 @@ export class SliderComponent implements OnInit {
     }
 
     sendObjData() {
-        debugger;
         localStorage.setItem('subjects', JSON.stringify(this.subjects));
-
-        // this.objData.emit(this.subjects);
     }
     getSubjects() {
         const that = this;

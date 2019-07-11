@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { LearnerResponse } from '../../learner-response';
+import { LearnerService } from '../../learner.service';
 @Component({
     selector: 'app-learner-grid',
     templateUrl: './learner-grid.component.html',
@@ -41,108 +43,26 @@ export class LearnerGridComponent implements OnInit {
     rowGroupPanelShow: string;
     pivotPanelShow: string;
     rowData: {};
-    // rowData = [
-    //     { make: 'Toyota', model: 'Celica', price: 35000 },
-    //     { make: 'Ford', model: 'Mondeo', price: 32000 },
-    //     { make: 'Porsche', model: 'Boxter', price: 72000 }
-    // ];
 
-    // columnDefs = [
-    //     { headerName: 'Make', field: 'make', width: 200, sortable: true, filter: true },
-    //     { headerName: 'Model', field: 'model', width: 400, sortable: true, filter: true },
-    //     { headerName: 'Price', field: 'price', width: 450, sortable: true, filter: true }
-    // ];
-
-    // defaultColDef = {
-    //     editable: true,
-    //     enableRowGroup: true,
-    //     enablePivot: true,
-    //     enableValue: true,
-    //     sortable: true,
-    //     resizable: true,
-    //     filter: true
-    // };
-    // rowSelection = 'single';
-    // rowGroupPanelShow = 'always';
-    // pivotPanelShow = 'always';
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private learnerService: LearnerService) {
         this.columnDefs = [
             {
-                headerName: 'Athlete',
-                field: 'athlete',
-                width: 150,
-                checkboxSelection: function(params) {
-                    return params.columnApi.getRowGroupColumns().length === 0;
-                },
-                headerCheckboxSelection: function(params) {
-                    return params.columnApi.getRowGroupColumns().length === 0;
-                }
-            },
-            {
-                headerName: 'Age',
-                field: 'age',
-                width: 90
-            },
-            {
-                headerName: 'Country',
-                field: 'country',
+                headerName: 'Learner ID',
+                field: 'LearnerID',
                 width: 120
             },
             {
-                headerName: 'Year',
-                field: 'year',
-                width: 90
+                headerName: 'Subject',
+                field: 'SchoolSubjectName',
+                width: 250
             },
             {
-                headerName: 'Date',
-                field: 'date',
-                width: 110
-            },
-            {
-                headerName: 'Sport',
-                field: 'sport',
-                width: 110
-            },
-            {
-                headerName: 'Gold',
-                field: 'gold',
-                width: 100
-            },
-            {
-                headerName: 'Silver',
-                field: 'silver',
-                width: 100
-            },
-            {
-                headerName: 'Bronze',
-                field: 'bronze',
-                width: 100
-            },
-            {
-                headerName: 'Total',
-                field: 'total',
-                width: 100
+                headerName: 'Marks',
+                field: 'Marks',
+                width: 250
             }
         ];
-        this.autoGroupColumnDef = {
-            headerName: 'Group',
-            width: 200,
-            field: 'athlete',
-            valueGetter: function(params: {
-                node: { group: any; key: any };
-                data: { [x: string]: any };
-                colDef: { field: string | number };
-            }) {
-                if (params.node.group) {
-                    return params.node.key;
-                } else {
-                    return params.data[params.colDef.field];
-                }
-            },
-            headerCheckboxSelection: true,
-            cellRenderer: 'agGroupCellRenderer',
-            cellRendererParams: { checkbox: true }
-        };
+
         this.defaultColDef = {
             editable: true,
             enableRowGroup: true,
@@ -169,10 +89,21 @@ export class LearnerGridComponent implements OnInit {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
 
-        this.http
-            .get('https://raw.githubusercontent.com/ag-grid/ag-grid/master/packages/ag-grid-docs/src/olympicWinnersSmall.json')
-            .subscribe(data => {
+        // this.http
+        //     .get('https://raw.githubusercontent.com/ag-grid/ag-grid/master/packages/ag-grid-docs/src/olympicWinnersSmall.json')
+        //     .subscribe(data => {
+        //         this.rowData = data;
+        //     });
+        this.learnerService.getLearners().subscribe(
+            (data: LearnerResponse) => {
+                // tslint:disable-next-line:forin
                 this.rowData = data;
-            });
+                console.log(data);
+                // this.isSuccess = true;
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 }

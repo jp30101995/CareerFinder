@@ -2,18 +2,25 @@
 <div class="row">
     <div class=" col-md-12 form-group">
         <label>Select Year</label>
-        <select class="form-control">
+        <select class="form-control" (change)="onChange($event.target.value)">
+            <option> Select...</option>
             <option>Year 1</option>
             <option>Year 2</option>
             <option>Year 3</option>
+            <option>Year 4</option>
+            <option>Year 5</option>
+            <option>Year 6</option>
+            <option>Year 7</option>
+            <option>Year 8</option>
+            <option>Year 9</option>
         </select>
     </div>
 </div>
 <hr />
 <div class="row">
     <!-- <div class="col-md-6"><app-slider [subjects]="subjects" (isDisplay)="enabledDisabledControl($event)"> </app-slider></div> -->
-    <div class="col-md-6"><app-slider (isDisplay)="enabledDisabledControl($event)"> </app-slider></div>
-    <div class="col-md-6"><app-recommendation-subject ></app-recommendation-subject></div>
+    <div class="col-md-6"><app-slider [yearId]="yearId" (isDisplay)="enabledDisabledControl($event)"> </app-slider></div>
+    <div class="col-md-6"><app-recommendation-subject></app-recommendation-subject></div>
 </div>
 <div class="row">
     <div class="col-md-6">
@@ -23,6 +30,3 @@
         <app-recommendation-subject-future></app-recommendation-subject-future>
     </div>
 </div>
-<!-- <div class="row">
-    <div class="col-md-12"><app-learner-grid></app-learner-grid></div>
-</div> -->

@@ -1,7 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { LearnerService } from './learner.service';
 import { LearnerResponse } from './learner-response';
-
 @Component({
     selector: 'app-learner',
     templateUrl: './learner.component.html',
@@ -12,13 +11,13 @@ export class LearnerComponent implements OnInit {
     similarSubjects: LearnerResponse[] = [];
     constructor(private learnerService: LearnerService) {}
     display = false;
-    ngOnInit() {
-        // this.getSubjects();
-    }
-
+    yearId: string;
+    ngOnInit() {}
     enabledDisabledControl($evnt: boolean) {
         this.display = $evnt;
     }
-
-   
+    onChange(objValue) {
+        this.yearId = objValue;
+        localStorage.setItem('yearId', objValue);
+    }
 }
