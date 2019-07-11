@@ -135,15 +135,15 @@ def getSubjects(learner_id):
     # }
     arr.append(grid_obj)
     #return similar_learners_df.to_json(orient='records')
-    for s in subjects:
-        id = str(learner_id) + '-' + str(learner_schoolid)
-        subject = learner_curr_year + '-' + s
-        obj = {
-            "learnerID": learner_id,
-            "subject": subject,
-            "marks": algo.predict(id, subject)
-        }
-        arr.append(obj)
+    # for s in subjects:
+    #     id = str(learner_id) + '-' + str(learner_schoolid)
+    #     subject = learner_curr_year + '-' + s
+    #     obj = {
+    #         "learnerID": learner_id,
+    #         "subject": subject,
+    #         "marks": algo.predict(id, subject)
+    #     }
+    #     arr.append(obj)
     return json.dumps(arr)
     # return json.dumps(learners)
     # return "".join(map(str, subjects))
