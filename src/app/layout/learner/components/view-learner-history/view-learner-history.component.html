@@ -1,0 +1,15 @@
+<button class="btn btn-primary btn-sm" style="float: right;" (click)="open(content)">View History</button>
+<ng-template class="" #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Learner's History</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+       <app-learner-grid></app-learner-grid>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    </div>
+</ng-template>

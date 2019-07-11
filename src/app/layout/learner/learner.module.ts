@@ -13,8 +13,17 @@ import { LearnerGridComponent } from './components/learner-grid/learner-grid.com
 import { GridModule } from '../../shared/modules/grid/grid.module';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { LearnerHistoryComponent } from './components/learner-history/learner-history.component';
+import { ViewLearnerHistoryComponent } from './components/view-learner-history/view-learner-history.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
-    declarations: [SliderComponent, LearnerComponent, RecommendationSubjectComponent, LearnerGridComponent, LearnerHistoryComponent],
+    declarations: [
+        SliderComponent,
+        LearnerComponent,
+        RecommendationSubjectComponent,
+        LearnerGridComponent,
+        LearnerHistoryComponent,
+        ViewLearnerHistoryComponent
+    ],
     imports: [
         GridModule,
         Ng2Charts,
@@ -23,7 +32,8 @@ import { LearnerHistoryComponent } from './components/learner-history/learner-hi
         LearnerRoutingModule,
         FormsModule,
         ReactiveFormsModule,
-        Ng5SliderModule
+        Ng5SliderModule,
+        NgbModule
     ]
     // schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
