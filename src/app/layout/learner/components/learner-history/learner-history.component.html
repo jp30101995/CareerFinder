@@ -3,7 +3,7 @@
         Learner History
         <app-view-learner-history></app-view-learner-history>
     </div>
-    <div class="card-body">
+    <div class="card-body" *ngIf="isSuccess"> 
         <canvas
             baseChart
             [datasets]="barChartData"

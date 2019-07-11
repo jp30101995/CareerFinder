@@ -1,4 +1,8 @@
 export class LearnerResponse {
-    subject_name: string;
-    marks: string;
+    // learnerID: any;
+    // subject: any;
+    // marks: any;
+    LearnerID: string;
+    Marks: number;
+    SchoolSubjectName: string;
 }

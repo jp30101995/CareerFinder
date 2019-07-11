@@ -9,10 +9,11 @@ import { LearnerResponse } from './learner-response';
 })
 export class LearnerComponent implements OnInit {
     subjects: LearnerResponse[] = [];
+    similarLearners: LearnerResponse[] = [];
     constructor(private learnerService: LearnerService) {}
     display = false;
     ngOnInit() {
-        this.getSubjects();
+        // this.getSubjects();
     }
 
     enabledDisabledControl($evnt: boolean) {
@@ -21,12 +22,12 @@ export class LearnerComponent implements OnInit {
 
     getSubjects() {
         const that = this;
-        that.subjects = [];
-        this.learnerService.getData().subscribe(
+        that.similarLearners = [];
+        this.learnerService.getLearners().subscribe(
             (data: LearnerResponse) => {
                 // tslint:disable-next-line:forin
                 for (const v in data) {
-                    that.subjects.push(data[v]);
+                    that.similarLearners.push(data[v]);
                 }
                 console.log(data);
             },

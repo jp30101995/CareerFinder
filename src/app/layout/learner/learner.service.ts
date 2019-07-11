@@ -9,11 +9,16 @@ import { LearnerResponse } from './learner-response';
 export class LearnerService {
     constructor(private http: HttpClient) {}
 
-    getData(): Observable<LearnerResponse> {
-        return this.http.get<LearnerResponse>(Apiurl.apiurl);
+    getLearners(): Observable<LearnerResponse> {
+        return this.http.get<LearnerResponse>(Apiurl.apiurl + 'getLearners/233381');
     }
+
+    getSubjects(): Observable<LearnerResponse> {
+        return this.http.get<LearnerResponse>(Apiurl.apiurl + 'getSubjects/233381');
+    }
+
     getPrediction(learner: LearnerResponse[]): Observable<LearnerResponse> {
         // return this.http.post<LearnerResponse>(Apiurl.apiurl);
-        return  null;
+        return null;
     }
 }

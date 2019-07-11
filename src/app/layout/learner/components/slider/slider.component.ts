@@ -9,7 +9,8 @@ import { LearnerService } from '../../learner.service';
     styleUrls: ['./slider.component.scss']
 })
 export class SliderComponent implements OnInit {
-    @Input() subjects: LearnerResponse[] = [];
+    // @Input() subjects: LearnerResponse[] = [];
+    subjects: LearnerResponse[] = [];
     @Output() isDisplay = new EventEmitter<boolean>();
     options: Options = {
         floor: 0,
@@ -17,20 +18,30 @@ export class SliderComponent implements OnInit {
         vertical: true
     };
     constructor(private learnerService: LearnerService) {}
-
-    ngOnInit() {}
+    isSuccess = false;
+    ngOnInit() {
+        this.getSubjects();
+    }
 
     checkPrediction() {
-        debugger;
         this.isDisplay.emit(true);
-        // const objData = this.subjects;
-        // this.learnerService.getPrediction(objData).subscribe(
-        //     (data: LearnerResponse) => {
-        //         console.log(data);
-        //     },
-        //     error => {
-        //         console.log(error);
-        //     }
-        // );
+    }
+    getSubjects() {
+        const that = this;
+        that.subjects = [];
+        this.learnerService.getSubjects().subscribe(
+            (data: LearnerResponse) => {
+                debugger;
+                // tslint:disable-next-line:forin
+                for (const v in data) {
+                    this.subjects.push(data[v]);
+                }
+                console.log(data);
+                this.isSuccess = true;
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 }

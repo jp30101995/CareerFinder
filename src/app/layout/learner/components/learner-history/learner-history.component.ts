@@ -1,44 +1,75 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { LearnerResponse } from '../../learner-response';
+import { LearnerService } from '../../learner.service';
 
 @Component({
-  selector: 'app-learner-history',
-  templateUrl: './learner-history.component.html',
-  styleUrls: ['./learner-history.component.scss']
+    selector: 'app-learner-history',
+    templateUrl: './learner-history.component.html',
+    styleUrls: ['./learner-history.component.scss']
 })
 export class LearnerHistoryComponent implements OnInit {
-  public barChartOptions: any = {
-    scaleShowVerticalLines: false,
-    responsive: true
-};
-public barChartLabels: string[] = [
-    '2006',
-    '2007',
-    '2008',
-    '2009',
-    '2010',
-    '2011',
-    '2012'
-];
-public barChartType: string;
-public barChartLegend: boolean;
+    // @Input() similarLearners: LearnerResponse[] = [];
+    similarLearners: LearnerResponse[] = [];
+    public barChartOptions: any = {
+        scaleShowVerticalLines: false,
+        responsive: true
+    };
+    public barChartLabels: string[] = [];
+    public barChartType: string;
+    public barChartLegend: boolean;
+    public subjectarr = [];
+    public markarr = [];
+    public barChartData: any[] = [];
+    isSuccess = false;
+    constructor(private learnerService: LearnerService) {}
 
-public barChartData: any[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'English' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Maths' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Science' }
-];
-  constructor() { }
+    ngOnInit() {
+        this.getLearners();
+        this.barChartType = 'bar';
+        this.barChartLegend = true;
+    }
 
-  ngOnInit() {
-    this.barChartType = 'bar';
-    this.barChartLegend = true;
-  }
-  // events
-  public chartClicked(e: any): void {
-    // console.log(e);
-}
+    getLearners() {
+        const that = this;
+        that.similarLearners = [];
+        this.learnerService.getLearners().subscribe(
+            (data: LearnerResponse) => {
+                // tslint:disable-next-line:forin
+                for (const v in data) {
+                    if (this.barChartLabels.indexOf(data[v].LearnerID) === -1) {
+                        this.barChartLabels.push(data[v].LearnerID);
+                        // this.barChartData.push(data[v].Marks);
+                    }
+                    if (this.subjectarr.indexOf(data[v].SchoolSubjectName) === -1) {
+                        this.subjectarr.push(data[v].SchoolSubjectName);
+                    }
+                    // that.similarLearners.push(data[v].LearnerID);
+                }
+                // tslint:disable-next-line:forin
+                for (const sub in this.subjectarr) {
+                    this.markarr = [];
+                    // this.barChartData.push({ data: [], label: sub });
+                    for (const v in data) {
+                        if (data[v].SchoolSubjectName === this.subjectarr[sub]) {
+                            this.markarr.push(data[v].Marks);
+                        }
+                    }
+                    this.barChartData.push({ data: this.markarr, label: this.subjectarr[sub] });
+                }
+                console.log(data);
+                this.isSuccess = true;
+            },
+            error => {
+                console.log(error);
+            }
+        );
+    }
+    // events
+    public chartClicked(e: any): void {
+        // console.log(e);
+    }
 
-public chartHovered(e: any): void {
-    // console.log(e);
-}
+    public chartHovered(e: any): void {
+        // console.log(e);
+    }
 }
