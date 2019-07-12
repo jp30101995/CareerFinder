@@ -145,11 +145,11 @@ def getFutureSubjects():
     #return similar_learners_df.to_json(orient='records')
     for s in subjects:
         id = str(learner_id) + '-' + str(learner_schoolid)
-        subject = s
+        subject = learner_curr_year + '-' + s
         obj = {
             "learnerID": learner_id,
             "subject": subject,
-            "marks": algo.predict(id, subject)[3]
+            "marks": (algo.predict(id, subject)[3] * 10)
         }
         arr.append(obj)
         
@@ -226,7 +226,7 @@ def getSubjects(learner_id):
         obj = {
             "learnerID": learner_id,
             "subject": subject,
-            "marks": algo.predict(id, subject)[3]
+            "marks": (algo.predict(id, subject)[3] * 10)
         }
         arr.append(obj)
         
