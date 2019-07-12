@@ -5,9 +5,13 @@
     </div>
     <div class="card-body">
         <div class="row" *ngIf="isSuccess">
-            <div class="col-md-2" style="height: 210px;" *ngFor="let s of subjects">
+            <div class="col-md-1" style="height: 210px;" *ngFor="let s of subjects">
                 <ng5-slider [(value)]="s.marks" [(ngModel)]="s.marks" [options]="options"></ng5-slider>
-                <span style="font-size: 15px">{{ s.subject }}</span>
+            </div>
+        </div>
+        <div class="row" *ngIf="isSuccess">
+            <div class="col-md-1" *ngFor="let s of subjects">
+                <span style="font-size: 15px">{{ s.subject.split('-')[1] }}</span>
             </div>
         </div>
     </div>
