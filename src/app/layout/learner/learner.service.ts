@@ -11,11 +11,11 @@ export class LearnerService {
     constructor(private http: HttpClient) {}
 
     getLearners(): Observable<LearnerResponse> {
-        return this.http.get<LearnerResponse>(Apiurl.apiurl + 'getLearners/232956');
+        return this.http.get<LearnerResponse>(Apiurl.apiurl + 'getLearners/4209');
     }
 
     getSubjects(): Observable<LearnerResponse> {
-        return this.http.get<LearnerResponse>(Apiurl.apiurl + 'getSubjects/232956');
+        return this.http.get<LearnerResponse>(Apiurl.apiurl + 'getSubjects/4209');
     }
 
     getPrediction(learner: LearnerResponse[]): Observable<LearnerResponse> {
