@@ -9,11 +9,10 @@ import { LearnerService } from '../../learner.service';
     styleUrls: ['./slider.component.scss']
 })
 export class SliderComponent implements OnInit {
-    // @Input() subjects: LearnerResponse[] = [];
     subjects: LearnerResponse[] = [];
     @Output() isDisplay = new EventEmitter<boolean>();
     @Output() objData = new EventEmitter<boolean>();
-    @Input() yearId: string;
+
     options: Options = {
         floor: 0,
         ceil: 100,
@@ -22,7 +21,6 @@ export class SliderComponent implements OnInit {
     constructor(private learnerService: LearnerService) {}
     isSuccess = false;
     ngOnInit() {
-        const sd = this.yearId;
         this.getSubjects();
     }
 

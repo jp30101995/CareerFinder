@@ -19,12 +19,12 @@
 <hr />
 <div class="row">
     <!-- <div class="col-md-6"><app-slider [subjects]="subjects" (isDisplay)="enabledDisabledControl($event)"> </app-slider></div> -->
-    <div class="col-md-12"><app-slider [yearId]="yearId" (isDisplay)="enabledDisabledControl($event)"> </app-slider></div>
+    <div class="col-md-12"><app-slider  (isDisplay)="enabledDisabledControl($event)"> </app-slider></div>
 </div>
 <div class="row">
     <div class="col-md-6"><app-recommendation-subject></app-recommendation-subject></div>
     <div class="col-md-6" *ngIf="display">
-        <app-recommendation-subject-future (isSubmitted)="datasubmitted($event)"></app-recommendation-subject-future>
+        <app-recommendation-subject-future></app-recommendation-subject-future>
     </div>
 </div>
 <div class="row">

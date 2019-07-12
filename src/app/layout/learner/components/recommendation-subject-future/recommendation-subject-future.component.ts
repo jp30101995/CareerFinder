@@ -28,18 +28,17 @@ export class RecommendationSubjectFutureComponent implements OnInit {
         this.getPrediction();
     }
     getPrediction() {
-        debugger;
         const that = this;
         that.futureSubjects = [];
+        that.doughnutChartLabels = [];
+        that.doughnutChartData = [];
         const item = JSON.parse(localStorage.getItem('subjects'));
         // tslint:disable-next-line:forin
         for (const i in item) {
             item[i].subject = String(item[i].subject).substr(String(item[i].subject).lastIndexOf('-') + 1);
         }
-        debugger;
         this.learnerService.getPrediction(item).subscribe(
             (data: LearnerResponse) => {
-                debugger;
                 // tslint:disable-next-line:forin
                 for (const v in data) {
                     this.doughnutChartLabels.push(data[v].subject);
