@@ -28,7 +28,7 @@
     "ag-grid": "^18.1.2",
     "ag-grid-angular": "^21.0.1",
     "ag-grid-community": "^21.0.1",
-    "chart.js": "2.7.3",
+    "chart.js": "2.9.4",
     "core-js": "2.5.7",
     "font-awesome": "4.7.0",
     "ng2-charts": "2.3.0",
